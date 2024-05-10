@@ -1,3 +1,3 @@
 export const siteConfig = {
- name: "Taskify",
+ name: "Única Task",
 };

@@ -45,7 +45,7 @@ export const NavItem = ({isExpanded, isActive, organization, onExpand} : NavItem
   ];
 
   const onClick = (href: string) => {
-    router.push(href)
+    router.push(href);
   };
 
     return(
