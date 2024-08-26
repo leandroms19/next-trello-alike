@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.0.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@hello-pangea/dnd": "^16.6.0",
+    "@mui/material": "^5.15.19",
     "@prisma/client": "^5.13.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -20,6 +23,7 @@
     "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "@react-icons/all-files": "^4.1.0",
     "@tanstack/react-query": "^5.35.1",
     "appwrite": "^14.0.1",
     "class-variance-authority": "^0.7.0",

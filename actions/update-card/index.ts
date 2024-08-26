@@ -20,7 +20,6 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 
   const { id, boardId, ...values } = data;
   let card;
-
   try {
     card = await db.card.update({
       where: {
@@ -35,19 +34,21 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         ...values,
       },
     });
-
+    
     await createAuditLog({
       entityTitle: card.title,
       entityId: card.id,
       entityType: ENTITY_TYPE.CARD,
       action: ACTION.UPDATE,
     });
+
   } catch (error) {
     return {
       error: "Failed to update.",
     };
   }
 
+  
   revalidatePath(`/board/${id}`);
   return { data: card };
 };

@@ -1,0 +1,100 @@
+-- CreateEnum
+CREATE TYPE "ACTION" AS ENUM ('CREATE', 'UPDATE', 'DELETE');
+
+-- CreateEnum
+CREATE TYPE "ENTITY_TYPE" AS ENUM ('BOARD', 'LIST', 'CARD');
+
+-- CreateTable
+CREATE TABLE "board" (
+    "id" TEXT NOT NULL,
+    "orgId" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "imageId" TEXT NOT NULL,
+    "imageThumbUrl" TEXT NOT NULL,
+    "imageFullUrl" TEXT NOT NULL,
+    "imageUserName" TEXT NOT NULL,
+    "imageLinkHTML" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "board_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "List" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "order" INTEGER NOT NULL,
+    "boardId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "List_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Card" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "order" INTEGER NOT NULL,
+    "description" TEXT,
+    "listId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Card_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Checklist" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "order" INTEGER NOT NULL,
+    "isCompleted" BOOLEAN NOT NULL DEFAULT false,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "cardId" TEXT NOT NULL,
+
+    CONSTRAINT "Checklist_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Comments" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "order" INTEGER NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "cardId" TEXT NOT NULL,
+
+    CONSTRAINT "Comments_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "AuditLog" (
+    "id" TEXT NOT NULL,
+    "orgId" TEXT NOT NULL,
+    "action" "ACTION" NOT NULL,
+    "entityId" TEXT NOT NULL,
+    "entityType" "ENTITY_TYPE" NOT NULL,
+    "entityTitle" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "userImage" TEXT NOT NULL,
+    "userName" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "AuditLog_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE INDEX "List_boardId_idx" ON "List"("boardId");
+
+-- CreateIndex
+CREATE INDEX "Card_listId_idx" ON "Card"("listId");
+
+-- CreateIndex
+CREATE INDEX "Checklist_cardId_idx" ON "Checklist"("cardId");
+
+-- CreateIndex
+CREATE INDEX "Comments_cardId_idx" ON "Comments"("cardId");

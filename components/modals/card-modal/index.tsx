@@ -10,11 +10,12 @@ import { Description } from "./description";
 import { Actions } from "./actions";
 import { AuditLog } from "@prisma/client";
 import { Activity } from "./activity";
-
+import { Date } from "./date";
 export const CardModal = () => {
     const id = useCardModal((state) => state.id);
     const isOpen = useCardModal((state) => state.isOpen);
     const onClose = useCardModal((state) => state.onClose);
+
 
     const { data: cardData } = useQuery<CardWithList>({
         queryKey: ["card", id],
@@ -26,9 +27,10 @@ export const CardModal = () => {
         queryFn: () => fetcher(`/api/cards/${id}/logs`)
     });
 
+
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent>
+            <DialogContent className="max-h-[90%] overflow-y-auto overflow-x-hidden">
                 {!cardData
                     ? <Header.Skeleton />
                     : <Header data={cardData} />
@@ -37,18 +39,26 @@ export const CardModal = () => {
                     <div className="col-span-3">
                         <div className="w-full space-y-6">
                             {!cardData
-                                ? <Description.Skeleton />
-                                : <Description data={cardData}/>
+                                ? 
+                                <div>
+                                    <Description.Skeleton />
+                                    <Date.Skeleton />
+                                </div>
+                                
+                                : <div>
+                                    <Description data={cardData} />
+                                    <Date data={cardData} />
+                                    </div>
                             }
                             {!auditLogsData
                                 ? <Activity.Skeleton />
-                                : <Activity items={auditLogsData}/>
+                                : <Activity items={auditLogsData} />
                             }
                         </div>
                     </div>
                     {!cardData
                         ? <Actions.Skeleton />
-                        : <Actions data={cardData}/>
+                        : <Actions data={cardData} />
                     }
                 </div>
             </DialogContent>

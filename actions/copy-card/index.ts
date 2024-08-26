@@ -34,7 +34,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     });
 
     if(!cardToCopy){
-      return {error: "Card not fount."}
+      return {error: "Card not found."}
     }
 
     const lastCard = await db.card.findFirst({

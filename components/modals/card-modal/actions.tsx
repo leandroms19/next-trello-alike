@@ -38,6 +38,16 @@ export const Actions = ({ data }: ActionsProps) => {
         },
     });
 
+    const { execute: executeCheckList, isLoading: isLoadingChecklist } = useAction(deleteCard, {
+        onSuccess(data) {
+            toast.success(`Card "${data.title}" checklist`);
+            cardModal.onClose();
+        },
+        onError(error) {
+            toast.error(error);
+        },
+    });
+
     const onCopy = () => {
         const boardId = params.boardId as string;
 
