@@ -47,7 +47,6 @@ model Card {
   title String
   order Int
   description String? @db.Text
-  date DateTime 
 
 
   listId String
