@@ -46,31 +46,6 @@ CREATE TABLE "Card" (
 );
 
 -- CreateTable
-CREATE TABLE "Checklist" (
-    "id" TEXT NOT NULL,
-    "title" TEXT NOT NULL,
-    "order" INTEGER NOT NULL,
-    "isCompleted" BOOLEAN NOT NULL DEFAULT false,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "cardId" TEXT NOT NULL,
-
-    CONSTRAINT "Checklist_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Comments" (
-    "id" TEXT NOT NULL,
-    "title" TEXT NOT NULL,
-    "order" INTEGER NOT NULL,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "cardId" TEXT NOT NULL,
-
-    CONSTRAINT "Comments_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "AuditLog" (
     "id" TEXT NOT NULL,
     "orgId" TEXT NOT NULL,
@@ -92,9 +67,3 @@ CREATE INDEX "List_boardId_idx" ON "List"("boardId");
 
 -- CreateIndex
 CREATE INDEX "Card_listId_idx" ON "Card"("listId");
-
--- CreateIndex
-CREATE INDEX "Checklist_cardId_idx" ON "Checklist"("cardId");
-
--- CreateIndex
-CREATE INDEX "Comments_cardId_idx" ON "Comments"("cardId");

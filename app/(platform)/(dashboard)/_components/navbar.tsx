@@ -11,9 +11,6 @@ export const Navbar = () => {
                 <div className="hidden md:flex">
                     <Logo />
                 </div>
-            <FormPopover align="start" side="bottom" sideOffset={18}>
-                <button className="rounded-sm hidden md:block h-auto py-1.5 px-2 bg-slate-400 size-sm">Create</button>  
-            </FormPopover>
             <FormPopover>
                 <button className="rounded-sm block md:hidden bg-black">+</button>
             </FormPopover>
