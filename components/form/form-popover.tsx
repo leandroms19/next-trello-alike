@@ -21,7 +21,7 @@ interface FormPopoverProps {
 
 export const FormPopover = ({children, side = "bottom", align, sideOffset = 0} : FormPopoverProps) => {
     const router = useRouter();
-    const closeRef = useRef<ElementRef<"button">>(null);
+    const closeRef = useRef<HTMLButtonElement>(null);
 
     const { execute, fieldErrors } = useAction(createBoard, {
         onSuccess: (data) => {

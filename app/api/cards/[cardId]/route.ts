@@ -4,10 +4,11 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: { cardId: string } }
+  context: { params: Promise<{ cardId: string }> } // 👈 agora params é Promise
 ) {
   try {
-    const { userId, orgId } = auth();
+    const { userId, orgId } = await auth();
+    const {cardId} = await context.params;
 
     if (!userId || !orgId) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -15,7 +16,7 @@ export async function GET(
 
     const card = await db.card.findUnique({
       where: {
-        id: params.cardId,
+        id: cardId,
         list: {
           board: {
             orgId,

@@ -1,8 +1,8 @@
 import { OrganizationProfile } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 
-const SettingsPage = () => {
-    const {orgId} = auth()
+const SettingsPage = async () => {
+    const {orgId} = await auth()
     let path = `/organization/${orgId}/settings`
     
     return(

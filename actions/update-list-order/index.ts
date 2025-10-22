@@ -9,7 +9,7 @@ import { UpdateListOrder } from "./schema";
 import { orderBy } from "lodash";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
-  const { userId, orgId } = auth();
+  const { userId, orgId } = await auth();
 
   if (!userId || !orgId) {
     return {
