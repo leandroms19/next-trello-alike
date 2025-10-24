@@ -4,12 +4,11 @@ import { redirect } from "next/navigation";
 import { ListContainer } from "./_components/list-container";
 
 interface BoardIdPageProps {
-    params: {
-        boardId: string
-    }
+    params: { boardId: string } | Promise<{ boardId: string }>;
 }
 
 const BoardIdPage = async ({ params }: BoardIdPageProps) => {
+    const { boardId } = "then" in params ? await params : params;
     const { orgId } = await auth();
 
     if (!orgId) {
@@ -18,7 +17,7 @@ const BoardIdPage = async ({ params }: BoardIdPageProps) => {
 
     const lists = await db.list.findMany({
         where: {
-            boardId: params.boardId,
+            boardId,
             board: {
                 orgId,
             },
@@ -37,7 +36,7 @@ const BoardIdPage = async ({ params }: BoardIdPageProps) => {
 
     return (
         <div className="p-4 h-full overflow-x-auto">
-            <ListContainer boardId={params.boardId} data={lists} />
+            <ListContainer boardId={boardId} data={lists} />
         </div>
     );
 };

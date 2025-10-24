@@ -11,7 +11,7 @@ export const BoardList = async() => {
     const {orgId} = await auth();
 
     if(!orgId){
-        return redirect("/select-org");
+        redirect("/select-org");
     }
 
     const boards = await db.board.findMany({
@@ -41,7 +41,7 @@ export const BoardList = async() => {
                 <FormPopover sideOffset={30} side="right">
                     <div role="button" className={cn("h-full w-full relative aspect-video bg-muted rounded-sm gap-y-1 flex flex-col items-center justify-center hover:opacity-75 transition")}>
                         <p className="text-sm">Create new board</p>
-                        <span className="text-xs">5 remaing</span>
+                        <span className="text-xs">5 remaining</span>
                     </div>
                 </FormPopover>
             </div>
