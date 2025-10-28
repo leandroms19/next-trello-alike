@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  context: { params: Promise<{ cardId: string }> } // 👈 agora params é Promise
+  context: { params: Promise<{ cardId: string }> } 
 ) {
   try {
     const { userId, orgId } = await auth();
