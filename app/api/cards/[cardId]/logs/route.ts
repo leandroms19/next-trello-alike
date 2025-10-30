@@ -3,14 +3,14 @@ import { auth } from "@clerk/nextjs/server";
 import { ENTITY_TYPE } from "@prisma/client";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request, context: any){
+export async function GET(request: Request, context: { params: { cardId: string }}){
   try {
     const { userId, orgId } = await auth();
 
     if (!userId || !orgId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    const { cardId } = await context.params;
+    const { cardId } =  context.params;
 
     const auditLog = await db.auditLog.findMany({
       where: {

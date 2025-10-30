@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
-import {
-  clerkMiddleware,
-  createRouteMatcher,
-} from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isProtectedRoute = createRouteMatcher([
   "/dashboard(.*)",
@@ -11,33 +8,32 @@ const isProtectedRoute = createRouteMatcher([
   "/organization(.*)",
 ]);
 
-export default clerkMiddleware(async (auth, req) => {
-  const { userId, orgId, redirectToSignIn } = await auth();
+const publicAuthRoutes = ["/sign-in", "/sign-up"];
 
-  // Usuário não autenticado tentando acessar rota protegida → redireciona para login
+export default clerkMiddleware(async (auth, req) => {
+  const { userId, orgId, redirectToSignIn } = await auth(); 
+  const pathname = req.nextUrl.pathname; 
+
+
   if (!userId && isProtectedRoute(req)) {
     return redirectToSignIn({ returnBackUrl: req.url });
   }
 
-  // Usuário autenticado, mas sem organização → redireciona para seleção
-  if (userId && !orgId && req.nextUrl.pathname !== "/select-org") {
-    const orgSelection = new URL("/select-org", req.url);
-    return NextResponse.redirect(orgSelection);
+  
+  if (userId && !orgId && pathname !== "/select-org") {
+    return NextResponse.redirect(new URL("/select-org", req.url));
   }
 
-  // Usuário autenticado acessando rota pública → redireciona para org ou seleção
-  if (userId && !isProtectedRoute(req)) {
-    let path = "/select-org";
-
-    if (orgId) {
-      path = `/organization/${orgId}`;
-    }
-
-    const orgSelection = new URL(path, req.url);
-    return NextResponse.redirect(orgSelection);
+  
+  if (
+    userId &&
+    !isProtectedRoute(req) &&
+    !publicAuthRoutes.includes(pathname)
+  ) {
+    const path = orgId ? `/organization/${orgId}` : "/select-org";
+    return NextResponse.redirect(new URL(path, req.url));
   }
 
-  // Caso contrário, segue o fluxo normalmente
   return NextResponse.next();
 });
 

@@ -5,7 +5,7 @@ import { Toaster } from "sonner";
 
 const PlatformLayout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <ClerkProvider>
+        <ClerkProvider redirectUrl="/select-org">
             <QueryProvider>
                 <Toaster />
                 <ModalProvider />

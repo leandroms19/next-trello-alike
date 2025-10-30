@@ -4,11 +4,11 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  context: { params: Promise<{ cardId: string }> } 
+  { params }: { params: { cardId: string } }
 ) {
   try {
     const { userId, orgId } = await auth();
-    const {cardId} = await context.params;
+    const {cardId} = await params;
 
     if (!userId || !orgId) {
       return new NextResponse("Unauthorized", { status: 401 });
